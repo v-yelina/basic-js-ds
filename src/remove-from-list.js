@@ -24,18 +24,39 @@ const { ListNode } = require("../extensions/list-node.js");
  */
 function removeKFromList(l, k) {
   let currentNode = l;
+  let prevNode;
   while (currentNode.next) {
     if (currentNode.value === k) {
+      prevNode = currentNode;
       currentNode.value = currentNode.next.value;
       currentNode.next = currentNode.next.next;
-      currentNode = currentNode.next;
     } else {
+      prevNode = currentNode;
       currentNode = currentNode.next;
     }
   }
-
+  if (currentNode.value === k) {
+    currentNode = prevNode;
+    currentNode.next = null;
+  }
   return l;
 }
+
+// function convertArrayToList(arr) {
+//   return arr.reverse().reduce((acc, cur) => {
+//     if (acc) {
+//       const node = new ListNode(cur);
+//       node.next = acc;
+//       return node;
+//     }
+
+//     return new ListNode(cur);
+//   }, null);
+// }
+
+// const initial = convertArrayToList([1, 2, 3, 3, 4, 5]);
+// console.log(initial);
+// removeKFromList(initial, 3);
 
 module.exports = {
   removeKFromList,
